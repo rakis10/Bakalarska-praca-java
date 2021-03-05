@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 @Service
 public class WithdrawalService {
@@ -22,20 +23,18 @@ public class WithdrawalService {
         this.withdrawalRepository = withdrawalRepository;
     }
     public ResponseEntity<?> getWithdrawal(String id) {
-       // Optional<Withdrawal> withdrawal = withdrawalRepository.findById(id);
-        // isPresent
+        Withdrawal w ;
         try {
             checkExist(id);
-        }catch (WithdrawalException e){
-            e.
+            w=  withdrawalRepository.findById(id).get();
+        }catch (NoSuchElementException e){
+            return new ResponseEntity<>("No withdrawal with ID "+ id, HttpStatus.NOT_FOUND);
         }
-        if (checkExist(id)){
-
-            throw new WithdrawalException("No withdrawal with ID" + id);
-        }else{
-
-            return new ResponseEntity<>(withdrawalRepository.findById(id).get(), HttpStatus.OK);
+        catch (WithdrawalException e){
+            System.out.println(e.toString());
+            return new ResponseEntity<>("No withdrawal with ID + "+ id, HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(w, HttpStatus.NOT_FOUND);
 
     }
 
