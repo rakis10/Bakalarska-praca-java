@@ -5,10 +5,6 @@ public class Money {
     int pieces;
     int value;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> a2d3a12789ba29657ba2891d845f967e34c492e9
     public Money(CashType cashType, int pieces, int value) {
         this.cashType = cashType;
         this.pieces = pieces;
