@@ -51,7 +51,7 @@ public class WithdrawalService {
 
         Long sum = 0L;
         for(Money m : withdrawal.getMoney()){
-            sum += m.getValue() + m.getPieces();
+            sum += m.getValue() * m.getPieces();
 
         }
         withdrawal.setPrice(sum);
@@ -110,8 +110,7 @@ public class WithdrawalService {
             ) {
                 checksum += m.getValue() * m.getPieces();
             }
-
-            if (checksum != withdrawal.getPrice() ){
+            if (!checksum.equals(withdrawal.getPrice())){
                 throw new WithdrawalException("Checksum of price failed");
             }
 
